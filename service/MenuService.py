@@ -26,7 +26,8 @@ class MenuService(object):
         except Exception as e:
             return []
         finally:
-            conn.close()
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
 
     @classmethod
     def get_menu_girls(cls, nMenuId):
@@ -51,7 +52,8 @@ class MenuService(object):
         except Exception as e:
             return []
         finally:
-            conn.close()
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
 
 # def main():
 #     print(obj2json(MenuService.get_menus()).encode('utf-8').decode('unicode_escape'))

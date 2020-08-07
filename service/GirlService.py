@@ -27,7 +27,7 @@ class GirlService(object):
         except Exception as e:
             return []
         finally:
-            conn.close()
+            ThinkPG.get_conn_pool_ex().putconn(conn)
 
     @classmethod
     def get_girl_menus(cls, nGirlId):
@@ -52,7 +52,27 @@ class GirlService(object):
         except Exception as e:
             return []
         finally:
-            conn.close()
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
+    @classmethod
+    def add_girl_menu_price(cls, nGirlId, nMenuId, nPrice):
+        conn = ThinkPG.get_conn_pool_ex().getconn()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        try:
+            nRet = cur.execute('''
+                INSERT INTO t_girl_menu_price(girl_id, menu_id, price)
+                VALUES
+                    (%s, %s, %s)
+            ''', (nGirlId, nMenuId, nPrice))
+
+            conn.commit()
+
+            return nRet
+        except Exception as e:
+            return 0
+        finally:
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
 
 # def main():
 #     print(obj2json(GirlService.get_girls()).encode('utf-8').decode('unicode_escape'))

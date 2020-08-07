@@ -1,0 +1,1 @@
+[2020-08-06 18:16:18,886] MainThread - /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.7/lib/python3.7/asyncio/selector_events.py __init__():53  DEBUG 	Using selector: KqueueSelector

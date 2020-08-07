@@ -41,7 +41,7 @@ class MenuService(object):
                             , a.price
                         FROM
                             t_girl_menu_price AS a 
-                            LEFT JOIN t_girl as b on a.girl_id = b.id
+                            LEFT JOIN t_girls as b on a.girl_id = b.id
                         where 
                             1 = 1
                             and a.menu_id = %s
@@ -55,8 +55,8 @@ class MenuService(object):
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
 
-# def main():
-#     print(obj2json(MenuService.get_menus()).encode('utf-8').decode('unicode_escape'))
-#
-# if __name__ == '__main__':
-#     main()
+def main():
+    print(obj2json(MenuService.get_menus()))
+
+if __name__ == '__main__':
+    main()

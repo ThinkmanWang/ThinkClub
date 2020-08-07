@@ -54,8 +54,8 @@ class GirlService(object):
         finally:
             conn.close()
 
-def main():
-    print(obj2json(GirlService.get_girls()))
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     print(obj2json(GirlService.get_girls()).encode('utf-8').decode('unicode_escape'))
+#
+# if __name__ == '__main__':
+#     main()

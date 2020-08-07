@@ -43,7 +43,7 @@ def rand_deal():
             if str(dictMenu["id"]) not in dictPlayList.keys():
                 dictPlayList[str(dictMenu["id"])] = dict(dictMenu)
 
-        g_logger.info("[%d/%d] => %s" % (g_nSuccess, g_nTotal, obj2json(dictPlayList), ))
+        g_logger.info("[%d/%d] => %d items" % (g_nSuccess, g_nTotal, len(dictPlayList.keys()), ))
 
         for dictMenu in dictPlayList.values():
             dictGirl = random.choice(dictMenu["girls"])

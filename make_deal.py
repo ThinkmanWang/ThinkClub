@@ -84,7 +84,7 @@ def main():
         return
 
     g_nManCount = len(g_lstMan)
-    rand_deal()
+    # rand_deal()
 
     for i in range(256):
         g_threadPool.apply_async(rand_deal)

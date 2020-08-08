@@ -10,7 +10,7 @@ from pythinkutils.common.object2json import *
 class DealService(object):
 
     @classmethod
-    def make_deal(cls, nManId, nManagerId, szDealTime):
+    def make_deal(cls, nManId, nManagerId, szDealTime=None):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
@@ -34,7 +34,7 @@ class DealService(object):
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
     @classmethod
-    def make_deal_detail(cls, nOrderId, nMenuId, nGirlId, nPrice, szDealTime):
+    def make_deal_detail(cls, nOrderId, nMenuId, nGirlId, nPrice, szDealTime=None):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:

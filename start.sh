@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd /root/code/luban
+cd /var/services/homes/thinkman/Github-Thinkman/ThinkClub
+export PATH="$PATH:/opt/bin"
 
-pipenv run python main.py -Dpname=luban > /dev/null 2>&1 &
+pipenv run python make_deal.py -Dpname=thinkclub > /dev/null 2>&1 &
 

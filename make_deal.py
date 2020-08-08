@@ -48,7 +48,7 @@ def rand_deal():
             g_nSuccess += 1
             g_logger.info("[%d] => %s %s %d items" % (g_nSuccess, szDate, dictMan["name"], len(dictPlayList.keys()),))
 
-            nOrderId = DealService.make_deal(dictMan["id"], dictManager["id"])
+            nOrderId = DealService.make_deal(dictMan["id"], dictManager["id"], szDate)
             if nOrderId <= 0:
                 continue
 

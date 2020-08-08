@@ -10,16 +10,16 @@ from pythinkutils.common.object2json import *
 class DealService(object):
 
     @classmethod
-    def make_deal(cls, nManId, nManagerId):
+    def make_deal(cls, nManId, nManagerId, szDealTime):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
             nRet = cur.execute('''
-                INSERT INTO t_deal(man_id, manager_id)
+                INSERT INTO t_deal(man_id, manager_id, create_time)
                 VALUES
-                    (%s, %s)
+                    (%s, %s, %s)
                 RETURNING id;
-            ''', (nManId, nManagerId))
+            ''', (nManId, nManagerId, szDealTime))
 
             conn.commit()
 

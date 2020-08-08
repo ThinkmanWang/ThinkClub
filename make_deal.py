@@ -38,7 +38,7 @@ def rand_deal():
                 if str(dictMenu["id"]) not in dictPlayList.keys():
                     dictPlayList[str(dictMenu["id"])] = dict(dictMenu)
 
-            szDate = randomDate("2018-01-01 00:00:00", "2020-12-31 23:59:59")
+            szDate = randomDate("2010-01-01 00:00:00", "2020-12-31 23:59:59")
             dictManager = random.choice(lstManager)
 
             # with g_lock:

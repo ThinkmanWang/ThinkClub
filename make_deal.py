@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import os
+
+pid = os.fork()
+
 import random
 
 from multiprocessing.pool import ThreadPool
@@ -60,7 +64,7 @@ def rand_deal():
 def main():
     # rand_deal()
 
-    for i in range(32):
+    for i in range(128):
         g_threadPool.apply_async(rand_deal)
 
     g_threadPool.close()

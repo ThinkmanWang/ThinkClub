@@ -16,7 +16,7 @@ from pythinkutils.common.datetime_utils import *
 
 g_nSuccess = 0
 g_lock = threading.Lock()
-g_threadPool = ThreadPool(128)
+g_threadPool = ThreadPool(256)
 
 def rand_deal():
     global g_nSuccess

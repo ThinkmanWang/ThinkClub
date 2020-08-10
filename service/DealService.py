@@ -6,6 +6,7 @@ from psycopg2.extras import DictCursor
 
 from pythinkutils.postgresql.ThinkPG import ThinkPG
 from pythinkutils.common.object2json import *
+from pythinkutils.common.datetime_utils import *
 
 class DealService(object):
 
@@ -76,6 +77,14 @@ class DealService(object):
     @classmethod
     def get_deal_with_count(cls, szDateStart, szDateEnd, nOffset, nLimit):
         return cls.get_deal_count(szDateStart, szDateEnd), cls.get_deal(szDateStart, szDateEnd, nOffset, nLimit)
+
+    @classmethod
+    def get_deal_by_month(cls, szMonth, nOffset, nLimit):
+        szStart = szMonth + "-01"
+        dateEnd = last_day_of_month_by_date(datetime(int(szStart.split("-")[0]), int(szStart.split("-")[1]), int(szStart.split("-")[2])))
+        szEnd = dateEnd.strftime('%Y-%m-%d')
+
+        return cls.get_deal_with_count(szStart, szEnd, nOffset, nLimit)
 
     @classmethod
     def get_deal(cls, szDateStart, szDateEnd, nOffset, nLimit):

@@ -20,6 +20,7 @@ def get_deal_by_month():
 
 
 def main():
+    get_deal_by_date()
     get_deal_by_month()
 
 if __name__ == '__main__':

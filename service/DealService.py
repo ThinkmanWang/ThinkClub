@@ -60,11 +60,15 @@ class DealService(object):
         try:
             cur.execute('''                
                         SELECT
-                            *
+                            b.name as menu_name
+                            , c.name as girl_name
+                            , a.*
                         FROM
-                            t_deal_detail
+                            t_deal_detail as a 
+                            left join t_menu as b on a.menu_id = b.id
+                            left join t_girls as c on a.girl_id = c.id
                         where 
-                            order_id = %s
+                            a.order_id = %s
                     ''', (nDealId, ))
             rows = cur.fetchall()
 
@@ -93,9 +97,13 @@ class DealService(object):
         try:
             szSql = '''
                 SELECT
-                    a.*
+                    b.name as manager_name
+                    , c.name as man_name
+                    , a.*
                 FROM
                     t_deal as a
+                    left join t_manager as b on a.manager_id = b.id
+                    left join t_man as c on a.man_id = c.id
                 where 
                     1 = 1
                     and a.create_time >= '{}'

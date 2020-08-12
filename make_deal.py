@@ -31,41 +31,44 @@ def rand_deal():
     global g_nManCount
 
     while True:
-        lstMan = []
-        setIndex = set()
+        try:
+            lstMan = []
+            setIndex = set()
 
-        nRandMan = random.randint(10, 200)
-        while len(setIndex) < nRandMan:
-            setIndex.add(random.randint(0, g_nManCount - 1))
+            nRandMan = random.randint(10, 200)
+            while len(setIndex) < nRandMan:
+                setIndex.add(random.randint(0, g_nManCount - 1))
 
-        for nIndex in setIndex:
-            lstMan.append(g_lstMan[nIndex])
+            for nIndex in setIndex:
+                lstMan.append(g_lstMan[nIndex])
 
-        g_logger.info("Random %d man" % (len(lstMan), ))
+            g_logger.info("Random %d man" % (len(lstMan), ))
 
-        for dictMan in lstMan:
+            for dictMan in lstMan:
 
-            dictPlayList = {}
-            nPlayCnt = random.randint(1, len(g_lstMenu))
+                dictPlayList = {}
+                nPlayCnt = random.randint(1, len(g_lstMenu))
 
-            while len(dictPlayList.keys()) < nPlayCnt:
-                dictMenu = random.choice(g_lstMenu)
-                if str(dictMenu["id"]) not in dictPlayList.keys():
-                    dictPlayList[str(dictMenu["id"])] = dict(dictMenu)
+                while len(dictPlayList.keys()) < nPlayCnt:
+                    dictMenu = random.choice(g_lstMenu)
+                    if str(dictMenu["id"]) not in dictPlayList.keys():
+                        dictPlayList[str(dictMenu["id"])] = dict(dictMenu)
 
-            szDate = randomDate("2010-01-01 00:00:00", "2020-12-31 23:59:59")
-            dictManager = random.choice(g_lstManager)
+                szDate = randomDate("2010-01-01 00:00:00", "2020-12-31 23:59:59")
+                dictManager = random.choice(g_lstManager)
 
-            g_nSuccess += 1
-            g_logger.info("[%d] => %s %s %d items" % (g_nSuccess, szDate, dictMan["name"], len(dictPlayList.keys()),))
+                nOrderId = DealService.make_deal(dictMan["id"], dictManager["id"], szDate)
+                if nOrderId <= 0:
+                    continue
 
-            nOrderId = DealService.make_deal(dictMan["id"], dictManager["id"], szDate)
-            if nOrderId <= 0:
-                continue
+                g_nSuccess += 1
+                g_logger.info("[%d] => %s %s %d items" % (g_nSuccess, szDate, dictMan["name"], len(dictPlayList.keys()),))
 
-            for dictMenu in dictPlayList.values():
-                dictGirl = random.choice(dictMenu["girls"])
-                DealService.make_deal_detail(nOrderId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate)
+                for dictMenu in dictPlayList.values():
+                    dictGirl = random.choice(dictMenu["girls"])
+                    DealService.make_deal_detail(nOrderId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate)
+        except Exception as ex:
+            continue
 
 
 def main():

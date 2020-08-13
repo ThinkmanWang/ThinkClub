@@ -35,6 +35,30 @@ class DealService(object):
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
     @classmethod
+    def make_multiple_deal(cls, lstDeals):
+        conn = ThinkPG.get_conn_pool_ex().getconn()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        try:
+
+            records_list_template = ','.join(['%s'] * len(lstDeals))
+            szInsert = 'INSERT INTO t_deal(man_id, manager_id, create_time) VALUES {} RETURNING id;'.format(records_list_template)
+
+
+            nRet = cur.execute(szInsert, lstDeals)
+
+            conn.commit()
+
+            rows = cur.fetchall()
+            if rows is None or len(rows) <= 0:
+                return 0
+
+            return rows
+        except Exception as e:
+            return 0
+        finally:
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
+    @classmethod
     def make_deal_multiple_detail(cls, lstDetails):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)

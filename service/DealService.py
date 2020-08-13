@@ -35,6 +35,25 @@ class DealService(object):
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
     @classmethod
+    def make_deal_multiple_detail(cls, lstDetails):
+        conn = ThinkPG.get_conn_pool_ex().getconn()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        try:
+
+            records_list_template = ','.join(['%s'] * len(lstDetails))
+            szInsert = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES {}'.format(records_list_template)
+
+            nRet = cur.execute(szInsert, lstDetails)
+
+            conn.commit()
+
+            return nRet
+        except Exception as e:
+            return 0
+        finally:
+            ThinkPG.get_conn_pool_ex().putconn(conn)
+
+    @classmethod
     def make_deal_detail(cls, nOrderId, nMenuId, nGirlId, nPrice, szDealTime=None):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)

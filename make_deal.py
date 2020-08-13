@@ -23,6 +23,16 @@ g_nManCount = 0
 g_lstMenu = None
 g_lstManager = None
 
+def make_deal_detail_list(nOrderId, nMenuId, nGirlId, nPrice, szDealTime=None):
+    return (nOrderId, nMenuId, nGirlId, nPrice, szDealTime)
+    # return {
+    #     "order_id": nOrderId
+    #     , "menu_id": nMenuId
+    #     , "girl_id": nGirlId
+    #     , "price": nPrice
+    #     , "deal_time": szDealTime
+    # }
+
 def rand_deal():
     global g_nSuccess
     global g_lstMan
@@ -64,10 +74,16 @@ def rand_deal():
                 g_nSuccess += 1
                 g_logger.info("[%d] => %s %s %d items" % (g_nSuccess, szDate, dictMan["name"], len(dictPlayList.keys()),))
 
+                lstDetails = []
                 for dictMenu in dictPlayList.values():
                     dictGirl = random.choice(dictMenu["girls"])
-                    DealService.make_deal_detail(nOrderId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate)
+                    # DealService.make_deal_detail(nOrderId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate)
+                    lstDetails.append(make_deal_detail_list(nOrderId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate))
+
+                DealService.make_deal_multiple_detail(lstDetails)
+
         except Exception as ex:
+            g_logger.error(ex)
             continue
 
 

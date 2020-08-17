@@ -93,7 +93,7 @@ def rand_deal_plus():
 
             DealService.make_deal_multiple_detail(lstDetails)
 
-            nCount = lstDealIds[len(lstDealIds) - 1] - 76205862
+            nCount = lstDealIds[len(lstDealIds) - 1]["id"] - 76205862
             g_logger.info("Deal count => %d" % (nCount, ))
 
         except Exception as ex:

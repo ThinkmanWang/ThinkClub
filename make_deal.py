@@ -93,6 +93,9 @@ def rand_deal_plus():
 
             DealService.make_deal_multiple_detail(lstDetails)
 
+            nCount = lstDealIds[len(lstDealIds) - 1] - 76205862
+            g_logger.info("Deal count => %d" % (nCount, ))
+
         except Exception as ex:
             g_logger.error(ex)
             continue
@@ -111,7 +114,7 @@ def rand_deal():
             lstMan = []
             setIndex = set()
 
-            nRandMan = random.randint(10, 200)
+            nRandMan = random.randint(100, 200)
             while len(setIndex) < nRandMan:
                 setIndex.add(random.randint(0, g_nManCount - 1))
 

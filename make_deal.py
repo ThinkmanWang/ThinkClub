@@ -16,7 +16,7 @@ from pythinkutils.common.datetime_utils import *
 
 g_nSuccess = 0
 g_lock = threading.Lock()
-g_threadPool = ThreadPool(64)
+g_threadPool = ThreadPool(256)
 
 g_lstMan = None
 g_nManCount = 0
@@ -25,13 +25,6 @@ g_lstManager = None
 
 def make_deal_detail_list(nOrderId, nMenuId, nGirlId, nPrice, szDealTime=None):
     return (nOrderId, nMenuId, nGirlId, nPrice, szDealTime)
-    # return {
-    #     "order_id": nOrderId
-    #     , "menu_id": nMenuId
-    #     , "girl_id": nGirlId
-    #     , "price": nPrice
-    #     , "deal_time": szDealTime
-    # }
 
 def make_deal_list(nManId, nManagerId, szDealTime=None):
     return (nManId, nManagerId, szDealTime)
@@ -50,7 +43,7 @@ def rand_deal_plus():
             lstMan = []
             setIndex = set()
 
-            nRandMan = random.randint(300, 500)
+            nRandMan = random.randint(10, 200)
             while len(setIndex) < nRandMan:
                 setIndex.add(random.randint(0, g_nManCount - 1))
 
@@ -119,7 +112,7 @@ def rand_deal():
             lstMan = []
             setIndex = set()
 
-            nRandMan = random.randint(100, 200)
+            nRandMan = random.randint(10, 200)
             while len(setIndex) < nRandMan:
                 setIndex.add(random.randint(0, g_nManCount - 1))
 
@@ -179,7 +172,7 @@ def main():
     g_nManCount = len(g_lstMan)
     # rand_deal_plus()
 
-    for i in range(64):
+    for i in range(256):
         g_threadPool.apply_async(rand_deal_plus)
 
     g_threadPool.close()

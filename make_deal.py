@@ -161,8 +161,8 @@ def main():
     global g_lstManager
     global g_nManCount
 
-    os.environ['TZ'] = 'Asia/Shanghai'
-    time.tzset()
+    # os.environ['TZ'] = 'Asia/Shanghai'
+    # time.tzset()
     g_logger.info("Started")
 
     g_lstMan = ManService.get_mans()

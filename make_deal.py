@@ -50,7 +50,7 @@ def rand_deal_plus():
             lstMan = []
             setIndex = set()
 
-            nRandMan = random.randint(100, 200)
+            nRandMan = random.randint(300, 500)
             while len(setIndex) < nRandMan:
                 setIndex.add(random.randint(0, g_nManCount - 1))
 

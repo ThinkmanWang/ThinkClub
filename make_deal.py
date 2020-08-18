@@ -16,7 +16,7 @@ from pythinkutils.common.datetime_utils import *
 
 g_nSuccess = 0
 g_lock = threading.Lock()
-g_threadPool = ThreadPool(32)
+g_threadPool = ThreadPool(4)
 
 g_lstMan = None
 g_nManCount = 0
@@ -179,7 +179,7 @@ def main():
     g_nManCount = len(g_lstMan)
     # rand_deal_plus()
 
-    for i in range(32):
+    for i in range(4):
         g_threadPool.apply_async(rand_deal_plus)
 
     g_threadPool.close()

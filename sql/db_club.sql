@@ -223,6 +223,9 @@ CREATE INDEX "idx_detail_girl" ON "t_deal_detail" USING btree (
 CREATE INDEX "idx_detail_menu" ON "t_deal_detail" USING btree (
   "menu_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
+CREATE INDEX "idx_detail_order_id" ON "t_deal_detail" USING btree (
+  "order_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+);
 
 -- ----------------------------
 -- Triggers structure for table t_deal_detail

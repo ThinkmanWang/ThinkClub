@@ -50,11 +50,11 @@ class DealService(object):
 
             rows = cur.fetchall()
             if rows is None or len(rows) <= 0:
-                return 0
+                return None
 
             return rows
         except Exception as e:
-            return 0
+            return None
         finally:
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
@@ -65,15 +65,19 @@ class DealService(object):
         try:
 
             records_list_template = ','.join(['%s'] * len(lstDetails))
-            szInsert = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES {}'.format(records_list_template)
+            szInsert = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES {} RETURNING id;'.format(records_list_template)
 
             nRet = cur.execute(szInsert, lstDetails)
 
             conn.commit()
 
-            return nRet
+            rows = cur.fetchall()
+            if rows is None or len(rows) <= 0:
+                return None
+
+            return rows
         except Exception as e:
-            return 0
+            return None
         finally:
             ThinkPG.get_conn_pool_ex().putconn(conn)
 

@@ -160,6 +160,8 @@ def main():
     global g_lstManager
     global g_nManCount
 
+    g_logger.info("Started")
+
     g_lstMan = ManService.get_mans()
     g_lstMenu = MenuService.get_menus()
     g_lstManager = ManagerService.get_managers()

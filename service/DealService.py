@@ -39,12 +39,8 @@ class DealService(object):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
-
-            records_list_template = ','.join(['%s'] * len(lstDeals))
-            szInsert = 'INSERT INTO t_deal(man_id, manager_id, create_time) VALUES {} RETURNING id;'.format(records_list_template)
-
-
-            nRet = cur.execute(szInsert, lstDeals)
+            szSql = 'INSERT INTO t_deal(man_id, manager_id, create_time) VALUES %s RETURNING id;'
+            psycopg2.extras.execute_values(cur, szSql, lstDeals, page_size=len(lstDeals))
 
             conn.commit()
 
@@ -64,10 +60,8 @@ class DealService(object):
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
 
-            records_list_template = ','.join(['%s'] * len(lstDetails))
-            szInsert = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES {} RETURNING id;'.format(records_list_template)
-
-            nRet = cur.execute(szInsert, lstDetails)
+            szSql = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES %s RETURNING id;'
+            psycopg2.extras.execute_values(cur, szSql, lstDetails, page_size=len(lstDetails))
 
             conn.commit()
 

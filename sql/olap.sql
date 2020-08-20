@@ -1,9 +1,7 @@
 CREATE TABLE olap."t_deal" (
   "id" int8 NOT NULL,
   "man_id" int8 NOT NULL,
-  "man_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "manager_id" int8 NOT NULL,
-  "manager_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "amount" numeric(10,2) NOT NULL,
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
   "update_time" timestamp(6) NOT NULL DEFAULT now()
@@ -20,9 +18,7 @@ CREATE TABLE olap."t_deal_detail" (
   "id" int8 NOT NULL,
   "order_id" int8 NOT NULL,
   "menu_id" int8 NOT NULL,
-  "menu_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "girl_id" int8 NOT NULL,
-  "girl_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "price" numeric(10,2) NOT NULL,
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
   "update_time" timestamp(6) NOT NULL DEFAULT now()

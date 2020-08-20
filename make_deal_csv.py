@@ -33,12 +33,12 @@ def make_deal_list(szOrderId, nManId, nManagerId, szDealTime=None):
 def make_deal_csv(lstDeal):
     with open("t_deal.csv", 'a+') as f:
         for deal in lstDeal:
-            f.write("{},{},{},{}\n".format(deal[0], deal[1], deal[2], deal[3]))
+            f.write("{},{},{},{},{}\n".format(deal[0], deal[1], deal[2], deal[3], deal[3]))
 
 def make_detail_csv(lstDetaill):
     with open("t_detail.csv", 'a+') as f:
         for detail in lstDetaill:
-            f.write("{},{},{},{},{}\n".format(detail[0], detail[1], detail[2], detail[3], detail[4]))
+            f.write("{},{},{},{},{},{}\n".format(detail[0], detail[1], detail[2], detail[3], detail[4], detail[4]))
 
 
 def rand_deal_plus():

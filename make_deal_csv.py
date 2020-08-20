@@ -3,6 +3,7 @@
 import os
 import random
 import json
+import uuid
 
 from multiprocessing.pool import ThreadPool
 import threading
@@ -22,29 +23,17 @@ g_lstMan = json.loads('''[{"id": 4, "name": "伟宸", "phone": "+1 (718) 819-307
 g_nManCount = 0
 g_lstMenu = json.loads('''[{"id": 5, "name": "肾保健", "create_time": "2020-08-07 13:07:18", "update_time": "2020-08-07 13:07:18", "girls": [{"girl_id": 1024, "name": "俞凯", "price": 788.0}, {"girl_id": 1027, "name": "雪丽", "price": 788.0}, {"girl_id": 1031, "name": "俊誉", "price": 788.0}, {"girl_id": 1035, "name": "军卿", "price": 780.0}, {"girl_id": 1042, "name": "静香", "price": 788.0}, {"girl_id": 1044, "name": "俊泽", "price": 788.0}, {"girl_id": 1045, "name": "浩成", "price": 788.0}, {"girl_id": 1047, "name": "雪怡", "price": 788.0}, {"girl_id": 1064, "name": "雨萌", "price": 788.0}, {"girl_id": 1066, "name": "博豪", "price": 788.0}, {"girl_id": 1071, "name": "钰彤", "price": 788.0}, {"girl_id": 1083, "name": "展博", "price": 788.0}, {"girl_id": 1098, "name": "清凌", "price": 788.0}, {"girl_id": 1102, "name": "海程", "price": 788.0}, {"girl_id": 1110, "name": "泰霖", "price": 788.0}, {"girl_id": 1117, "name": "芮涵", "price": 788.0}, {"girl_id": 1123, "name": "博裕", "price": 788.0}, {"girl_id": 1127, "name": "惠茜", "price": 788.0}, {"girl_id": 1129, "name": "月松", "price": 788.0}, {"girl_id": 1133, "name": "云哲", "price": 788.0}, {"girl_id": 1135, "name": "萧然", "price": 788.0}, {"girl_id": 1138, "name": "远帆", "price": 788.0}]}, {"id": 1, "name": "洗澡", "create_time": "2020-08-07 13:06:45", "update_time": "2020-08-07 13:06:45", "girls": [{"girl_id": 1024, "name": "俞凯", "price": 100.0}, {"girl_id": 1027, "name": "雪丽", "price": 100.0}, {"girl_id": 1031, "name": "俊誉", "price": 100.0}, {"girl_id": 1036, "name": "培安", "price": 100.0}, {"girl_id": 1042, "name": "静香", "price": 100.0}, {"girl_id": 1044, "name": "俊泽", "price": 100.0}, {"girl_id": 1049, "name": "宸赫", "price": 100.0}, {"girl_id": 1063, "name": "皓睿", "price": 100.0}, {"girl_id": 1074, "name": "月婵", "price": 100.0}, {"girl_id": 1098, "name": "清凌", "price": 100.0}, {"girl_id": 1107, "name": "俊誉", "price": 100.0}, {"girl_id": 1127, "name": "惠茜", "price": 100.0}, {"girl_id": 1129, "name": "月松", "price": 100.0}]}, {"id": 4, "name": "采耳", "create_time": "2020-08-07 13:07:04", "update_time": "2020-08-07 13:07:04", "girls": [{"girl_id": 1024, "name": "俞凯", "price": 128.0}, {"girl_id": 1027, "name": "雪丽", "price": 128.0}, {"girl_id": 1031, "name": "俊誉", "price": 128.0}, {"girl_id": 1035, "name": "军卿", "price": 128.0}, {"girl_id": 1036, "name": "培安", "price": 128.0}, {"girl_id": 1042, "name": "静香", "price": 128.0}, {"girl_id": 1044, "name": "俊泽", "price": 128.0}, {"girl_id": 1045, "name": "浩成", "price": 128.0}, {"girl_id": 1064, "name": "雨萌", "price": 128.0}, {"girl_id": 1071, "name": "钰彤", "price": 128.0}, {"girl_id": 1083, "name": "展博", "price": 128.0}, {"girl_id": 1098, "name": "清凌", "price": 128.0}, {"girl_id": 1101, "name": "俞凯", "price": 128.0}, {"girl_id": 1110, "name": "泰霖", "price": 128.0}, {"girl_id": 1129, "name": "月松", "price": 128.0}, {"girl_id": 1133, "name": "云哲", "price": 128.0}]}, {"id": 3, "name": "按摩", "create_time": "2020-08-07 13:07:00", "update_time": "2020-08-07 13:07:38", "girls": [{"girl_id": 1031, "name": "俊誉", "price": 2122.0}, {"girl_id": 1035, "name": "军卿", "price": 1471.0}, {"girl_id": 1042, "name": "静香", "price": 2477.0}, {"girl_id": 1044, "name": "俊泽", "price": 2489.0}, {"girl_id": 1045, "name": "浩成", "price": 1460.0}, {"girl_id": 1049, "name": "宸赫", "price": 2085.0}, {"girl_id": 1051, "name": "墨含", "price": 1650.0}, {"girl_id": 1063, "name": "皓睿", "price": 1685.0}, {"girl_id": 1064, "name": "雨萌", "price": 1851.0}, {"girl_id": 1071, "name": "钰彤", "price": 1711.0}, {"girl_id": 1083, "name": "展博", "price": 1607.0}, {"girl_id": 1098, "name": "清凌", "price": 2127.0}, {"girl_id": 1101, "name": "俞凯", "price": 2401.0}, {"girl_id": 1107, "name": "俊誉", "price": 1801.0}, {"girl_id": 1123, "name": "博裕", "price": 1847.0}, {"girl_id": 1127, "name": "惠茜", "price": 2322.0}, {"girl_id": 1129, "name": "月松", "price": 1768.0}, {"girl_id": 1138, "name": "远帆", "price": 2438.0}]}, {"id": 2, "name": "足疗", "create_time": "2020-08-07 13:06:50", "update_time": "2020-08-09 22:05:24", "girls": [{"girl_id": 1024, "name": "俞凯", "price": 188.0}, {"girl_id": 1036, "name": "培安", "price": 188.0}, {"girl_id": 1044, "name": "俊泽", "price": 188.0}, {"girl_id": 1064, "name": "雨萌", "price": 188.0}, {"girl_id": 1071, "name": "钰彤", "price": 188.0}, {"girl_id": 1074, "name": "月婵", "price": 188.0}, {"girl_id": 1083, "name": "展博", "price": 188.0}, {"girl_id": 1098, "name": "清凌", "price": 188.0}, {"girl_id": 1101, "name": "俞凯", "price": 188.0}, {"girl_id": 1107, "name": "俊誉", "price": 188.0}, {"girl_id": 1110, "name": "泰霖", "price": 188.0}, {"girl_id": 1120, "name": "伟菘", "price": 188.0}, {"girl_id": 1129, "name": "月松", "price": 188.0}]}]''')
 g_lstManager = json.loads('''[{"id": 5002, "name": "梦婷", "phone": "+375 (645) 259-9327", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5004, "name": "奕漳", "phone": "+55 (517) 976-0915", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5009, "name": "海程", "phone": "+82 (713) 633-5939", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5001, "name": "羽彤", "phone": "+7 (871) 812-8187", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5003, "name": "玺越", "phone": "+33 (159) 514-5695", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5006, "name": "孜绍", "phone": "+86 (301) 723-8782", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5007, "name": "伟宸", "phone": "+212 (711) 440-7694", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5010, "name": "永鑫", "phone": "+355 (341) 502-7923", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5005, "name": "龙胜", "phone": "+63 (865) 707-5302", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}, {"id": 5008, "name": "佐仪", "phone": "+62 (440) 778-4228", "create_time": "2020-08-07 20:53:01", "update_time": "2020-08-07 20:53:01"}]''')
-g_nPosStart = 2200000000
 
 def make_deal_detail_list(nOrderId, nMenuId, nGirlId, nPrice, szDealTime=None):
     return (nOrderId, nMenuId, nGirlId, nPrice, szDealTime)
 
-def make_deal_list(nManId, nManagerId, szDealTime=None):
-    return (nManId, nManagerId, szDealTime)
+def make_deal_list(szOrderId, nManId, nManagerId, szDealTime=None):
+    return (szOrderId, nManId, nManagerId, szDealTime)
 
 def make_deal_csv(lstDeal):
-    global g_nPosStart
-
-    lstIds = []
     with open("t_deal.csv", 'a+') as f:
         for deal in lstDeal:
-            g_nPosStart += 1
-            f.write("{},{},{},{}\n".format(g_nPosStart, deal[0], deal[1], deal[2]))
-
-            lstIds.append({
-                "id": g_nPosStart
-            })
-
-    return lstIds
-
+            f.write("{},{},{},{}\n".format(deal[0], deal[1], deal[2], deal[3]))
 
 def make_detail_csv(lstDetaill):
     with open("t_detail.csv", 'a+') as f:
@@ -68,7 +57,6 @@ def rand_deal_plus():
             lstMan = []
             setIndex = set()
 
-            nRandMan = random.randint(10, 200)
             nRandMan = 1000
             while len(setIndex) < nRandMan:
                 setIndex.add(random.randint(0, g_nManCount - 1))
@@ -76,26 +64,19 @@ def rand_deal_plus():
             for nIndex in setIndex:
                 lstMan.append(g_lstMan[nIndex])
 
-            # g_logger.info("Random %d man" % (len(lstMan), ))
-
             lstDeals = []
             for dictMan in lstMan:
 
                 szDate = randomDate("2010-01-01 00:00:00", "2020-12-31 23:59:59")
                 dictManager = random.choice(g_lstManager)
 
-                lstDeals.append((dictMan["id"], dictManager["id"], szDate))
-
-
-            lstDealIds = make_deal_csv(lstDeals)
-            if lstDealIds is None or len(lstDealIds) <= 0:
-                continue
+                lstDeals.append((str(uuid.uuid4()), dictMan["id"], dictManager["id"], szDate))
 
             lstDetails = []
             nPos = 0
-            for dictDealId in lstDealIds:
-                nDealId = dictDealId["id"]
-                _, _, szDate = lstDeals[nPos]
+            for deal in lstDeals:
+                szDealId = deal[0]
+                szDate = deal[3]
 
                 dictPlayList = {}
                 nPlayCnt = random.randint(1, len(g_lstMenu))
@@ -108,13 +89,14 @@ def rand_deal_plus():
                 for dictMenu in dictPlayList.values():
                     dictGirl = random.choice(dictMenu["girls"])
                     lstDetails.append(
-                        make_deal_detail_list(nDealId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate))
+                        make_deal_detail_list(szDealId, dictMenu["id"], dictGirl["girl_id"], dictGirl["price"], szDate))
 
                 nPos += 1
 
+            make_deal_csv(lstDeals)
             make_detail_csv(lstDetails)
 
-            g_nDealCount += len(lstDealIds)
+            g_nDealCount += len(lstDeals)
             g_nDetailCount += len(lstDetails)
             g_logger.info("[%d] Random %d man, Deal count => %d | %d" % ((get_timestamp() - nStartTime), len(lstMan), g_nDealCount, g_nDetailCount ))
 
@@ -128,13 +110,8 @@ def main():
     global g_lstManager
     global g_nManCount
 
-    # os.environ['TZ'] = 'Asia/Shanghai'
-    # time.tzset()
     g_logger.info("Started")
 
-    # g_lstMan = ManService.get_mans()
-    # g_lstMenu = MenuService.get_menus()
-    # g_lstManager = ManagerService.get_managers()
 
     if g_lstMan is None or len(g_lstMan) <= 0 \
             or g_lstManager is None or len(g_lstManager) <= 0 \

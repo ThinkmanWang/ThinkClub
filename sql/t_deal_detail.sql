@@ -12,7 +12,7 @@
  Target Server Version : 90424
  File Encoding         : 65001
 
- Date: 20/08/2020 18:26:03
+ Date: 21/08/2020 11:41:04
 */
 
 
@@ -21,13 +21,12 @@
 -- ----------------------------
 DROP TABLE IF EXISTS "t_deal_detail";
 CREATE TABLE "t_deal_detail" (
-  "id" int8 NOT NULL DEFAULT nextval('t_deal_detail_id_seq'::regclass),
   "deal_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "menu_id" int8 NOT NULL,
   "girl_id" int8 NOT NULL,
   "price" numeric(10,2) NOT NULL,
-  "create_time" timestamp(6) NOT NULL DEFAULT now(),
-  "update_time" timestamp(6) NOT NULL DEFAULT now()
+  "create_time" timestamp(0) NOT NULL DEFAULT now(),
+  "update_time" timestamp(0) NOT NULL DEFAULT now()
 )
 ;
 ALTER TABLE "t_deal_detail" OWNER TO "thinkman";
@@ -58,4 +57,4 @@ EXECUTE PROCEDURE "public"."update_currenttimestamp_column"();
 -- ----------------------------
 -- Primary Key structure for table t_deal_detail
 -- ----------------------------
-ALTER TABLE "t_deal_detail" ADD CONSTRAINT "t_deal_detail_pkey" PRIMARY KEY ("id");
+ALTER TABLE "t_deal_detail" ADD CONSTRAINT "t_deal_detail_pkey" PRIMARY KEY ("deal_id", "menu_id");

@@ -49,7 +49,10 @@ def main():
 
     while get_offset() < g_nTotal:
         try:
-            insert_deal_detail()
+            if insert_deal_detail():
+                continue
+            else:
+                time.sleep(10)
         except Exception as e:
             g_logger.info(e)
             time.sleep(10)

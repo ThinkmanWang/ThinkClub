@@ -37,6 +37,7 @@ def insert_deal_detail():
         g_logger.info("[%d s] %d / %d" % ((get_timestamp() - nStartTime), get_offset(), g_nTotal))
         return True
     except Exception as e:
+        g_logger.info(e)
         return False
     finally:
         ThinkPG.get_conn_pool_ex().putconn(conn)
@@ -44,11 +45,13 @@ def insert_deal_detail():
 def main():
     # nStartTime = get_timestamp()
     # g_logger.info("[%d s] %d / %d" % ((get_timestamp() - nStartTime), get_offset(), g_nTotal))
+    g_logger.info("Start!!!")
 
     while get_offset() < g_nTotal:
         try:
             insert_deal_detail()
         except Exception as e:
+            g_logger.info(e)
             time.sleep(10)
             continue
 

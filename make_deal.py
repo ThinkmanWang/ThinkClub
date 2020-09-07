@@ -88,13 +88,13 @@ def rand_deal_plus():
 
                 nPos += 1
 
-            lstDetailIds = DealService.make_deal_multiple_detail(lstDetails)
-            if lstDetailIds is None or len(lstDetailIds) <= 0:
-                continue
+            # lstDetailIds = DealService.make_deal_multiple_detail(lstDetails)
+            # if lstDetailIds is None or len(lstDetailIds) <= 0:
+            #     continue
 
             nDealCount = lstDealIds[len(lstDealIds) - 1]["id"] - 76205862
-            nDetailCount = lstDetailIds[len(lstDetailIds) - 1]["id"] - 1585466
-            g_logger.info("[%d] Random %d man, Deal count => %d | %d" % ((get_timestamp() - nStartTime), len(lstMan), nDealCount, nDetailCount ))
+            # nDetailCount = lstDetailIds[len(lstDetailIds) - 1]["id"] - 1585466
+            g_logger.info("[%d] Random %d man, Deal count => %d " % ((get_timestamp() - nStartTime), len(lstMan), nDealCount ))
 
         except Exception as ex:
             g_logger.error(ex)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+import uuid
 
 from psycopg2.extras import DictCursor
 
@@ -15,20 +16,21 @@ class DealService(object):
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
+            szID = str(uuid.uuid4())
+
             nRet = cur.execute('''
-                INSERT INTO t_deal(man_id, manager_id, create_time)
+                INSERT INTO t_deal(id, man_id, manager_id, create_time)
                 VALUES
-                    (%s, %s, %s)
-                RETURNING id;
-            ''', (nManId, nManagerId, szDealTime))
+                    (%s, %s, %s, %s)
+            ''', (szID, nManId, nManagerId, szDealTime))
 
             conn.commit()
 
-            rows = cur.fetchall()
-            if rows is None or len(rows) <= 0:
-                return 0
+            # rows = cur.fetchall()
+            # if rows is None or len(rows) <= 0:
+            #     return 0
 
-            return rows[0]["id"]
+            return szID
         except Exception as e:
             return 0
         finally:
@@ -36,19 +38,23 @@ class DealService(object):
 
     @classmethod
     def make_multiple_deal(cls, lstDeals):
+
+        lstIDRet = []
+        for dictDeal in lstDeals:
+            dictDeal["id"] = str(uuid.uuid4())
+            lstIDRet.append({
+                "id": dictDeal["id"]
+            })
+
         conn = ThinkPG.get_conn_pool_ex().getconn()
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
-            szSql = 'INSERT INTO t_deal(man_id, manager_id, create_time) VALUES %s RETURNING id;'
+            szSql = 'INSERT INTO t_deal(id, man_id, manager_id, create_time) VALUES %s '
             psycopg2.extras.execute_values(cur, szSql, lstDeals, page_size=len(lstDeals))
 
             conn.commit()
 
-            rows = cur.fetchall()
-            if rows is None or len(rows) <= 0:
-                return None
-
-            return rows
+            return lstIDRet
         except Exception as e:
             return None
         finally:
@@ -60,18 +66,13 @@ class DealService(object):
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         try:
 
-            szSql = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES %s RETURNING id;'
+            szSql = 'INSERT INTO t_deal_detail(order_id, menu_id, girl_id, price, create_time) VALUES %s '
             psycopg2.extras.execute_values(cur, szSql, lstDetails, page_size=len(lstDetails))
 
             conn.commit()
 
-            rows = cur.fetchall()
-            if rows is None or len(rows) <= 0:
-                return None
-
-            return rows
         except Exception as e:
-            return None
+            pass
         finally:
             ThinkPG.get_conn_pool_ex().putconn(conn)
 
@@ -109,7 +110,7 @@ class DealService(object):
                             left join t_menu as b on a.menu_id = b.id
                             left join t_girls as c on a.girl_id = c.id
                         where 
-                            a.order_id = %s
+                            a.deal_id = %s
                     ''', (nDealId, ))
             rows = cur.fetchall()
 

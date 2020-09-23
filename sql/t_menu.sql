@@ -12,13 +12,21 @@
  Target Server Version : 90424
  File Encoding         : 65001
 
- Date: 20/08/2020 18:27:03
+ Date: 20/09/2020 20:38:46
 */
 
 
 -- ----------------------------
 -- Table structure for t_menu
 -- ----------------------------
+DROP SEQUENCE IF EXISTS "t_menu_id_seq";
+CREATE SEQUENCE "t_menu_id_seq"
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 10
+CACHE 1;
+
 DROP TABLE IF EXISTS "t_menu";
 CREATE TABLE "t_menu" (
   "id" int8 NOT NULL DEFAULT nextval('t_menu_id_seq'::regclass),

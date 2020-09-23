@@ -15,6 +15,13 @@
  Date: 20/08/2020 18:26:25
 */
 
+DROP SEQUENCE IF EXISTS "t_girls_id_seq";
+CREATE SEQUENCE "t_girls_id_seq"
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 5000
+CACHE 1;
 
 -- ----------------------------
 -- Table structure for t_girls

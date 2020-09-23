@@ -15,6 +15,13 @@
  Date: 20/08/2020 18:26:36
 */
 
+DROP SEQUENCE IF EXISTS "t_man_id_seq";
+CREATE SEQUENCE "t_man_id_seq"
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 10000
+CACHE 1;
 
 -- ----------------------------
 -- Table structure for t_man

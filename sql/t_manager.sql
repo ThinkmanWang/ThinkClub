@@ -15,13 +15,20 @@
  Date: 20/08/2020 18:26:51
 */
 
+DROP SEQUENCE IF EXISTS "t_manager_id_seq";
+CREATE SEQUENCE "t_manager_id_seq"
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 6000
+CACHE 1;
 
 -- ----------------------------
 -- Table structure for t_manager
 -- ----------------------------
 DROP TABLE IF EXISTS "t_manager";
 CREATE TABLE "t_manager" (
-  "id" int8 NOT NULL DEFAULT nextval('t_man_id_seq'::regclass),
+  "id" int8 NOT NULL DEFAULT nextval('t_manager_id_seq'::regclass),
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "phone" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
@@ -56,4 +63,4 @@ EXECUTE PROCEDURE "public"."update_currenttimestamp_column"();
 -- ----------------------------
 -- Primary Key structure for table t_manager
 -- ----------------------------
-ALTER TABLE "t_manager" ADD CONSTRAINT "t_man_copy1_pkey" PRIMARY KEY ("id");
+ALTER TABLE "t_manager" ADD CONSTRAINT "t_manager_copy1_pkey" PRIMARY KEY ("id");

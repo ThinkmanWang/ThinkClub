@@ -26,22 +26,36 @@ CREATE TABLE "t_deal" (
   "manager_id" int8 NOT NULL,
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
   "update_time" timestamp(6) NOT NULL DEFAULT now()
-)
-;
+) PARTITION BY RANGE (create_time)
+--     SUBPARTITION  BY LIST (manager_id)
+--         SUBPARTITION TEMPLATE (
+--             SUBPARTITION 5001  VALUES (5002)
+--             , SUBPARTITION 5002  VALUES (5002)
+--             , SUBPARTITION 5003  VALUES (5002)
+--             , SUBPARTITION 5004  VALUES (5002)
+--             , SUBPARTITION 5005  VALUES (5002)
+--
+--             , SUBPARTITION 5006  VALUES (5002)
+--             , SUBPARTITION 5007  VALUES (5002)
+--             , SUBPARTITION 5008  VALUES (5002)
+--             , SUBPARTITION 5009  VALUES (5002)
+--             , SUBPARTITION 5010  VALUES (5002)
+--
+--             , DEFAULT SUBPARTITION other_manager
+--         )
+(
+    START (timestamp '2010-01-01 00:00:00') INCLUSIVE
+    END (timestamp '2031-01-01 00:00:00') EXCLUSIVE
+    EVERY (INTERVAL '1 month')
+);
 ALTER TABLE "t_deal" OWNER TO "thinkman";
 
 -- ----------------------------
 -- Indexes structure for table t_deal
 -- ----------------------------
-CREATE INDEX "idx_deal_create_time" ON "t_deal" USING btree (
-  "create_time" "pg_catalog"."timestamp_ops" ASC NULLS LAST
-);
-CREATE INDEX "idx_deal_man" ON "t_deal" USING btree (
-  "man_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
-CREATE INDEX "idx_deal_manager" ON "t_deal" USING btree (
-  "manager_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
+CREATE INDEX "idx_deal_create_time" ON "public"."t_deal" USING btree ("create_time");
+CREATE INDEX "idx_deal_man" ON "public"."t_deal" USING btree ("man_id");
+CREATE INDEX "idx_deal_manager" ON "public"."t_deal" USING btree ("manager_id");
 
 -- ----------------------------
 -- Triggers structure for table t_deal
@@ -53,4 +67,6 @@ EXECUTE PROCEDURE "public"."update_currenttimestamp_column"();
 -- ----------------------------
 -- Primary Key structure for table t_deal
 -- ----------------------------
-ALTER TABLE "t_deal" ADD CONSTRAINT "t_deal_pkey" PRIMARY KEY ("id");
+CREATE UNIQUE INDEX "idx_id" ON "public"."t_deal" USING btree (
+  "id"
+);

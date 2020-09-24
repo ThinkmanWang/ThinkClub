@@ -14,6 +14,8 @@ PARTITION BY RANGE (create_time)
     EVERY (INTERVAL '1 month')
 );
 
+
+
 CREATE TABLE olap."t_deal_detail" (
   "deal_id" varchar(255) NOT NULL,
   "menu_id" int8 NOT NULL,
@@ -29,3 +31,6 @@ PARTITION BY RANGE (create_time)
     END (timestamp '2031-01-01 00:00:00') EXCLUSIVE
     EVERY (INTERVAL '1 month')
 );
+
+CREATE UNIQUE INDEX "idx_id" ON "olap"."t_deal" USING btree ("id");
+CREATE UNIQUE INDEX "idx_detail_id" ON "olap"."t_deal_detail" USING btree ("deal_id", "menu_id");

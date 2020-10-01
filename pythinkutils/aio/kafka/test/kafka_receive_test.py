@@ -24,9 +24,10 @@ class TestConsumer(ThinkAioKafkaConsumer):
         await g_aio_logger.info(szMsg)
 
 async def send_test():
+    szMsg = '''{ "cust_id": 1313131, "month": 12, "expenses": 1313.13 }'''
     while True:
         await asyncio.sleep(5)
-        nRet = await ThinkAioKafkaProducer.send(g_config.get("kafka", "host"), g_config.get("kafka", "topic"), get_current_time_str())
+        nRet = await ThinkAioKafkaProducer.send(g_config.get("kafka", "host"), g_config.get("kafka", "topic"), szMsg)
         await g_aio_logger.info(nRet)
 
 def main():
@@ -35,7 +36,7 @@ def main():
     myConsumer = TestConsumer(g_config.get("kafka", "host"), g_config.get("kafka", "topic"), "thinkman")
     myConsumer.start()
 
-    asyncio.gather(send_test())
+    # asyncio.gather(send_test())
 
     loop.run_forever()
 

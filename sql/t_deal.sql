@@ -27,22 +27,6 @@ CREATE TABLE "t_deal" (
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
   "update_time" timestamp(6) NOT NULL DEFAULT now()
 ) PARTITION BY RANGE (create_time)
---     SUBPARTITION  BY LIST (manager_id)
---         SUBPARTITION TEMPLATE (
---             SUBPARTITION 5001  VALUES (5002)
---             , SUBPARTITION 5002  VALUES (5002)
---             , SUBPARTITION 5003  VALUES (5002)
---             , SUBPARTITION 5004  VALUES (5002)
---             , SUBPARTITION 5005  VALUES (5002)
---
---             , SUBPARTITION 5006  VALUES (5002)
---             , SUBPARTITION 5007  VALUES (5002)
---             , SUBPARTITION 5008  VALUES (5002)
---             , SUBPARTITION 5009  VALUES (5002)
---             , SUBPARTITION 5010  VALUES (5002)
---
---             , DEFAULT SUBPARTITION other_manager
---         )
 (
     START (timestamp '2010-01-01 00:00:00') INCLUSIVE
     END (timestamp '2031-01-01 00:00:00') EXCLUSIVE

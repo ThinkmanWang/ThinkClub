@@ -2,7 +2,6 @@ CREATE TABLE olap."t_deal" (
   "id" varchar(255) NOT NULL,
   "man_id" int8 NOT NULL,
   "manager_id" int8 NOT NULL,
-  "amount" numeric(10,2) NOT NULL,
   "create_time" timestamp(6) NOT NULL DEFAULT now(),
   "update_time" timestamp(6) NOT NULL DEFAULT now()
 )
